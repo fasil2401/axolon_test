@@ -5,6 +5,7 @@ import 'package:interview_axolon/view/account_add.dart';
 import 'package:interview_axolon/view/accounts.dart';
 import 'package:interview_axolon/view/homescreen.dart';
 import 'package:interview_axolon/view/login_screen.dart';
+import 'package:interview_axolon/view/map_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Repository/box_repository.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
 
           getPages: [
             GetPage(name: '/', page: ()=>  LoginScreen(),
+            transition: Transition.cupertino
+            ),
+             GetPage(name: '/map', page: ()=>  MapView(),
             transition: Transition.cupertino
             ),
              GetPage(name: '/home', page: ()=> const HomePage(),

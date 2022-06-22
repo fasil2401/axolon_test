@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:interview_axolon/Repository/box_repository.dart';
 import 'package:interview_axolon/controller/account_control.dart';
 import 'package:interview_axolon/model/account.dart';
 import 'package:interview_axolon/model/firebase_model.dart';
@@ -27,6 +28,7 @@ class _AccountAddState extends State<AccountAdd> {
   TextEditingController _rollController = TextEditingController();
 
   final services = Services();
+  final repo = BoxRepository();
 final controller = Get.put(AccountsController());
   XFile? _image;
 
@@ -48,9 +50,9 @@ final controller = Get.put(AccountsController());
         backgroundColor: commonScaffoldBack,
         appBar: AppBar(
           backgroundColor: splashBackColor,
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           title: const Text(
-            'Accounts',
+            'Add Account',
             style: TextStyle(fontFamily: 'Rubik'),
           ),
         ),
@@ -176,7 +178,7 @@ final controller = Get.put(AccountsController());
                           borderRadius: BorderRadius.circular(10), // <-- Radius
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async{
                         // loginControl.checkLoginForm();
                         bool? isValidated = _formKey.currentState?.validate();
                     if (isValidated == true) {
@@ -187,7 +189,8 @@ final controller = Get.put(AccountsController());
                         roll: int.parse(rollText),
                         imagePath: _imagePath,
                       ));
-                      // Get.back();
+                      Get.back();
+                    //  await BoxRepository.clearBox();
 
                       }
                       else{
@@ -227,6 +230,7 @@ final controller = Get.put(AccountsController());
                      final account = Acccount(name: nameText, roll: int.parse(rollText), isFirebase: true, imagePath: _imagePath);
                       services.createAccount(account);
                       Get.back();
+                      
 
                       }
                       else{

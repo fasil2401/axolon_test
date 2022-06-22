@@ -15,5 +15,6 @@ class BoxRepository {
 
 
   static closeBox() async => await Hive.box(boxName).close(); 
+  static clearBox() async => await Hive.box(boxName).clear(); 
 
 }
