@@ -1,13 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:interview_axolon/controller/account_control.dart';
 import 'package:interview_axolon/view/constants/heights.dart';
+import 'package:interview_axolon/view/constants/paddings.dart';
 import 'package:sizer/sizer.dart';
 
+import 'components/custom_text.dart';
+import 'components/name_text.dart';
+import 'constants/border_radius.dart';
 import 'constants/colors.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
 
+  @override
+  State<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  final controller = Get.put(AccountsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,94 +36,77 @@ class AccountPage extends StatelessWidget {
           actions: [IconButton(icon: const Icon(Icons.map), onPressed: () {})]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          TextEditingController _nameController = TextEditingController();
-          TextEditingController _rollController = TextEditingController();
-          Get.defaultDialog(
-              title: 'Add Account',
-              content: Column(
-                children: [
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "please enter name";
-                      } else {
-                        if (RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]')
-                            .hasMatch(value)) {
-                          return "please enter a valid name";
-                        }
-                        return null;
-                      }
-                    },
-                    controller: _nameController,
-                    decoration: inputDecorate('Enter Name', 'Name'),
-                  ),
-                  commonHeight2,
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                                return "please enter Roll number";
-                              } else {
-                                if (RegExp(r'^[0-9]*$').hasMatch(value) &&
-                                    value.length < 3) {
-                                  return null;
-                                } else {
-                                  return "invalid input";
-                                }}
-                    },
-                    controller: _rollController,
-                    decoration: inputDecorate('Enter Roll number', 'Roll number'),
-                  ),
-                  commonHeight2,
-                  SizedBox(
-                  height: 5.5.h,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: textBlueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // <-- Radius
-                      ),
-                    ),
-                    onPressed: () {
-                      // loginControl.checkLoginForm();
-                    },
-                    child: Text(
-                      "Save",
-                      style: TextStyle(
-                        color: textFieldColor,
-                        fontSize: 16.sp,
-                        fontFamily: 'Rubik',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ),
-                ],
-              ));
+          Get.toNamed('/add');
         },
         child: Icon(Icons.add),
         backgroundColor: splashBackColor,
       ),
-    );
-  }
-
-  InputDecoration inputDecorate(String hint, String label) {
-    return InputDecoration(
-      isDense: true,
-      filled: true,
-      labelText: label,
-      labelStyle: TextStyle(
-          color: const Color.fromARGB(255, 39, 1, 93),
-          fontFamily: 'Rubik',
-          fontSize: 14.sp,
-          fontWeight: FontWeight.w600),
-      hintText: hint,
-      fillColor: Colors.blue.shade100,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide.none,
+      body: GetBuilder<AccountsController>(
+        builder: (cont) {
+          return Padding(
+            padding: commonHorizontalPadding,
+            child: ListView.separated(
+              itemCount: cont.observableBox.length,
+              itemBuilder: (context, index) {
+                List<dynamic> data = cont.observableBox.values.toList();
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: commonRadius,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(3.w),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 25.w,
+                          width: 25.w,
+                          child: data[index].imagePath == null
+                              ? ClipRRect(
+                                  borderRadius: commonRadius,
+                                  child: Image.asset(
+                                    'asset/images/profile.jpeg',
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : ClipRRect(
+                                  borderRadius: commonRadius,
+                                  child: Image.file(
+                                    File(data[index].imagePath),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        Expanded(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 50.w,
+                              child: NameText(
+                                name: data[index].name ?? "N/A",
+                              ),
+                            ),
+                            CustomText(
+                              text: 'Roll Number : ${data[index].roll ?? "N/A"}',
+                              size: 14.sp,
+                              weight: FontWeight.w600,
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => commonHeight2,
+            ),
+          );
+        },
       ),
     );
   }

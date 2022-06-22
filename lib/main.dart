@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:interview_axolon/view/account_add.dart';
 import 'package:interview_axolon/view/accounts.dart';
 import 'package:interview_axolon/view/homescreen.dart';
 import 'package:interview_axolon/view/login_screen.dart';
 import 'package:sizer/sizer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'Repository/box_repository.dart';
+import 'model/account.dart';
 
-void main() {
+void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await Hive.initFlutter();
+  Hive.registerAdapter(AccountsAdapter());
+  await BoxRepository.openBox();
   runApp(const MyApp());
 }
 
@@ -35,6 +45,9 @@ class MyApp extends StatelessWidget {
             transition: Transition.cupertino
             ),
             GetPage(name: '/account', page: ()=> const AccountPage(),
+            transition: Transition.cupertino
+            ),
+            GetPage(name: '/add', page: ()=>  AccountAdd(),
             transition: Transition.cupertino
             )
           ],

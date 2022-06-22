@@ -17,8 +17,8 @@ class AccountsAdapter extends TypeAdapter<Accounts> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Accounts(
-      title: fields[0] as String?,
-      note: fields[1] as String?,
+      name: fields[0] as String?,
+      roll: fields[1] as int?,
       imagePath: fields[2] as dynamic,
     );
   }
@@ -28,9 +28,9 @@ class AccountsAdapter extends TypeAdapter<Accounts> {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.note)
+      ..write(obj.roll)
       ..writeByte(2)
       ..write(obj.imagePath);
   }

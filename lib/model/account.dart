@@ -4,11 +4,11 @@ part 'account.g.dart';
 @HiveType(typeId: 0)
 class Accounts {
   @HiveField(0)
-  final String? title;
+  final String? name;
   @HiveField(1)
-  final String? note;
+  final int? roll;
   @HiveField(2)
   final dynamic imagePath;
 
-  Accounts({this.title, this.note, this.imagePath,});
+  Accounts({this.name, this.roll, this.imagePath,});
 }
