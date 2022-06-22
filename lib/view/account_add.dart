@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:interview_axolon/controller/account_control.dart';
 import 'package:interview_axolon/model/account.dart';
+import 'package:interview_axolon/model/firebase_model.dart';
 import 'package:interview_axolon/view/constants/paddings.dart';
 import 'package:sizer/sizer.dart';
 
+import '../services/firebase_services.dart';
 import 'constants/border_radius.dart';
 import 'constants/colors.dart';
 import 'constants/heights.dart';
@@ -23,6 +25,8 @@ class _AccountAddState extends State<AccountAdd> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _rollController = TextEditingController();
+
+  final services = Services();
 final controller = Get.put(AccountsController());
   XFile? _image;
 
@@ -183,7 +187,7 @@ final controller = Get.put(AccountsController());
                         roll: int.parse(rollText),
                         imagePath: _imagePath,
                       ));
-                      Get.back();
+                      // Get.back();
 
                       }
                       else{
@@ -192,6 +196,45 @@ final controller = Get.put(AccountsController());
                       },
                       child: Text(
                         "Save",
+                        style: TextStyle(
+                          color: textFieldColor,
+                          fontSize: 16.sp,
+                          fontFamily: 'Rubik',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  commonHeight2,
+                  SizedBox(
+                    height: 5.5.h,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: textBlueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // <-- Radius
+                        ),
+                      ),
+                      onPressed: () async{
+                        // loginControl.checkLoginForm();
+                        bool? isValidated = _formKey.currentState?.validate();
+                    if (isValidated == true) {
+                      String nameText = _nameController.text;
+                      String rollText = _rollController.text;
+                      
+                     final account = Acccount(name: nameText, roll: int.parse(rollText), isFirebase: true, imagePath: _imagePath);
+                      services.createAccount(account);
+                      Get.back();
+
+                      }
+                      else{
+                        Get.snackbar('Alert', 'Please Enter Valid Text', snackPosition: SnackPosition.BOTTOM);
+                      }
+                      },
+                      child: Text(
+                        "Save to Firebase",
                         style: TextStyle(
                           color: textFieldColor,
                           fontSize: 16.sp,
