@@ -4,7 +4,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:interview_axolon/view/account_add.dart';
 import 'package:interview_axolon/view/accounts.dart';
 import 'package:interview_axolon/view/homescreen.dart';
+import 'package:interview_axolon/view/location_tracking.dart';
 import 'package:interview_axolon/view/login_screen.dart';
+import 'package:interview_axolon/view/map.dart';
 import 'package:interview_axolon/view/map_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/', page: ()=>  LoginScreen(),
             transition: Transition.cupertino
             ),
-             GetPage(name: '/map', page: ()=>  MapView(),
+             GetPage(name: '/map', page: ()=>  LocationTracking(),
             transition: Transition.cupertino
             ),
              GetPage(name: '/home', page: ()=> const HomePage(),
