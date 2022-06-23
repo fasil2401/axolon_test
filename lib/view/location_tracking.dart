@@ -172,10 +172,10 @@ Directions? _info;
           onPressed: () {
             setState(() {
               // showLocationPins();
-             LatLng newlatlang = LatLng(27.7149298,85.2903343);
+             LatLng newlatlang = LatLng(currentLocation.latitude!,currentLocation.longitude!);
                  mapController?.animateCamera( 
                           CameraUpdate.newCameraPosition(
-                                CameraPosition(target: newlatlang, zoom: 17) 
+                                CameraPosition(target: newlatlang, zoom: 20) 
                                 //17 is new zoom level
                           )
                         );

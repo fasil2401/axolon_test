@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:interview_axolon/main.dart';
 import 'package:interview_axolon/view/constants/colors.dart';
 
 import '../model/api_model.dart';
@@ -48,6 +49,13 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.list),
             onPressed: () {
               Get.toNamed('/account');
+             }
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              Get.offAllNamed('/login');
+              preferences!.setBool('isLogin', false);
              }
           )
         ]

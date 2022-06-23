@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:interview_axolon/view/account_add.dart';
 import 'package:interview_axolon/view/accounts.dart';
+import 'package:interview_axolon/view/firrst.dart';
 import 'package:interview_axolon/view/homescreen.dart';
 import 'package:interview_axolon/view/location_tracking.dart';
 import 'package:interview_axolon/view/login_screen.dart';
@@ -12,13 +13,20 @@ import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Repository/box_repository.dart';
 import 'model/account.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+SharedPreferences? preferences;
 
 void main() async{
+
    WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
   Hive.registerAdapter(AccountsAdapter());
   await BoxRepository.openBox();
+
+  preferences = await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -38,10 +46,13 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           // home: const HomePage(),
-          initialRoute: '/',
+          initialRoute: '/login',
 
           getPages: [
-            GetPage(name: '/', page: ()=>  LoginScreen(),
+            GetPage(name: '/', page: ()=>  FirstScreen(),
+            transition: Transition.cupertino
+            ),
+            GetPage(name: '/login', page: ()=>  LoginScreen(),
             transition: Transition.cupertino
             ),
              GetPage(name: '/map', page: ()=>  LocationTracking(),

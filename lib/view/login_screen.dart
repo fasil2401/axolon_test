@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:interview_axolon/main.dart';
 import 'package:interview_axolon/view/constants/colors.dart';
 import 'package:sizer/sizer.dart';
 
@@ -121,6 +122,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       loginControl.checkLoginForm();
+                      preferences!.setBool('isLogin', true);
                     },
                     child: Text(
                       "Login",
