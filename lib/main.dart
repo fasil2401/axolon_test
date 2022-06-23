@@ -5,6 +5,7 @@ import 'package:interview_axolon/view/account_add.dart';
 import 'package:interview_axolon/view/accounts.dart';
 import 'package:interview_axolon/view/firrst.dart';
 import 'package:interview_axolon/view/homescreen.dart';
+import 'package:interview_axolon/view/location.dart';
 import 'package:interview_axolon/view/location_tracking.dart';
 import 'package:interview_axolon/view/login_screen.dart';
 import 'package:interview_axolon/view/map.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/login', page: ()=>  LoginScreen(),
             transition: Transition.cupertino
             ),
-             GetPage(name: '/map', page: ()=>  LocationTracking(),
+             GetPage(name: '/map', page: ()=>  LocationView(),
             transition: Transition.cupertino
             ),
              GetPage(name: '/home', page: ()=> const HomePage(),

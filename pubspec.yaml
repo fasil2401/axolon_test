@@ -50,6 +50,7 @@ dependencies:
   shared_preferences: ^2.0.15
 
   intl: ^0.17.0
+  haversine_distance: ^1.2.1
 
 dev_dependencies:
   flutter_test:
